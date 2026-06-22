@@ -32,25 +32,25 @@ Jumper Wires	                As Required
 IR Sensors
 
 Sensor	            Arduino Pin
-Left IR	                D2
-Middle IR	              D4
-Right IR	              D3
-VCC	                    5V
-GND	                   GND
+>Left IR	                D2
+>Middle IR	              D4
+>Right IR	              D3
+>VCC	                    5V
+>GND	                   GND
 
 ## L298N Motor Driver
 L298N Pin	         Arduino Pin
-ENA	                    D5
-IN1                    	D8
-IN2                    	D9
-IN3	                    D10
-IN4	                    D11
-ENB	                    D6
+>ENA	                    D5
+>IN1                    	D8
+>IN2                    	D9
+>IN3	                    D10
+>IN4	                    D11
+>ENB	                    D6
 
 ## Motors
 
-  Left Side Motors → OUT1 & OUT2
-  Right Side Motors → OUT3 & OUT4
+  >Left Side Motors → OUT1 & OUT2
+  >Right Side Motors → OUT3 & OUT4
 
 ## ⚙️ Working Principle
  1. IR sensors continuously monitor the line.
@@ -75,12 +75,12 @@ White Surface	          LOW (0)
 ## Movement Logic
 
 Left	    Middle	    Right	      Action
-  0	        1	         0	        Forward
-  1	        0	         0	        Turn Left
-  0	        0	         1	        Turn Right
-  1	        1	         0	        Sharp Left
-  0	        1	         1	        Sharp Right
-  1	        1	         1	        Forward
+ >0	        1	         0	        Forward
+ >1	        0	         0	        Turn Left
+ >0	        0	         1	        Turn Right
+ >1	        1	         0	        Sharp Left
+ >0	        1	         1	        Sharp Right
+>1	        1	         1	        Forward
           Others	-	-	Stop
 
           
