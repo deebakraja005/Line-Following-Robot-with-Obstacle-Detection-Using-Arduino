@@ -1,0 +1,134 @@
+// -------- IR SENSOR PINS --------
+#define LEFT_IR   2
+#define MID_IR    4
+#define RIGHT_IR  3
+
+// -------- L298N PINS --------
+#define ENA 5
+#define IN1 8
+#define IN2 9
+#define IN3 10
+#define IN4 11
+#define ENB 6
+
+int speedVal = 150;
+
+// -------- SETUP --------
+void setup() {
+  pinMode(LEFT_IR, INPUT);
+  pinMode(MID_IR, INPUT);
+  pinMode(RIGHT_IR, INPUT);
+
+  pinMode(ENA, OUTPUT);
+  pinMode(ENB, OUTPUT);
+
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+// -------- LOOP --------
+void loop() {
+
+  int left  = digitalRead(LEFT_IR);
+  int mid   = digitalRead(MID_IR);
+  int right = digitalRead(RIGHT_IR);
+
+  Serial.print("L:");
+  Serial.print(left);
+  Serial.print(" M:");
+  Serial.print(mid);
+  Serial.print(" R:");
+  Serial.println(right);
+
+  // -------- LINE FOLLOWING LOGIC --------
+
+  if (mid == 1 && left == 0 && right == 0) {
+    forward();
+  }
+  else if (left == 1 && mid == 0) {
+    turnLeft();
+  }
+  else if (right == 1 && mid == 0) {
+    turnRight();
+  }
+  else if (left == 1 && mid == 1 && right == 0) {
+    sharpLeft();
+  }
+  else if (right == 1 && mid == 1 && left == 0) {
+    sharpRight();
+  }
+  else if (left == 1 && mid == 1 && right == 1) {
+    forward();  // junction or wide line
+  }
+  else {
+    stopBot();
+  }
+}
+
+// -------- MOTOR FUNCTIONS --------
+
+void forward() {
+  analogWrite(ENA, speedVal);
+  analogWrite(ENB, speedVal);
+
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void turnLeft() {
+  analogWrite(ENA, speedVal - 40);
+  analogWrite(ENB, speedVal);
+
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void turnRight() {
+  analogWrite(ENA, speedVal);
+  analogWrite(ENB, speedVal - 40);
+
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+}
+
+void sharpLeft() {
+  analogWrite(ENA, speedVal);
+  analogWrite(ENB, speedVal);
+
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void sharpRight() {
+  analogWrite(ENA, speedVal);
+  analogWrite(ENB, speedVal);
+
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+}
+
+void stopBot() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+}
